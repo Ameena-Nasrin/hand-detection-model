@@ -20,6 +20,10 @@ detector = ht.HandDetector(detection_con=0.85)
 
 while True:
     success, img = cap.read()
+    if not success or img is None:
+        print("Failed to capture image from camera")
+        break
+    
     img = cv2.flip(img, 1)  
 
      
@@ -68,8 +72,13 @@ while True:
     img_gray = cv2.cvtColor(img_canvas, cv2.COLOR_BGR2GRAY)
     _, img_inv = cv2.threshold(img_gray, 50, 255, cv2.THRESH_BINARY_INV)
     img_inv = cv2.cvtColor(img_inv, cv2.COLOR_GRAY2BGR)
-    img = cv2.bitwise_and(img, img_inv)
-    img = cv2.bitwise_or(img, img_canvas)
+    
+    # Ensure images have the same size before bitwise operations
+    if img.shape == img_inv.shape and img.shape == img_canvas.shape:
+        img = cv2.bitwise_and(img, img_inv)
+        img = cv2.bitwise_or(img, img_canvas)
+    else:
+        print(f"Image size mismatch: img={img.shape}, img_inv={img_inv.shape}, img_canvas={img_canvas.shape}")
 
      
     cv2.rectangle(img, (250, 10), (450, 100), (0, 0, 255), cv2.FILLED) # Red
