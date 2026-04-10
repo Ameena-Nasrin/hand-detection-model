@@ -24,7 +24,7 @@ class UIManager:
         """
         Draws the top selection bar with color boxes.
         """
-         cv2.rectangle(frame, (0, 0), (self.width, 100), (45, 45, 45), -1)
+        cv2.rectangle(frame, (0, 0), (self.width, 100), (45, 45, 45), -1)
         cv2.line(frame, (0, 100), (self.width, 100), (255, 255, 255), 2)
 
         
@@ -78,7 +78,6 @@ class UIManager:
             color = (0, 255, 255)
             label = "Selecting"
 
-         
         cv2.circle(frame, (x, y), 10, color, cv2.FILLED)
         cv2.putText(frame, label, (x + 15, y - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
         

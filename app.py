@@ -49,7 +49,7 @@ while True:
                     draw_color = (0, 0, 0)
 
        
-        if fingers[1] and fingers[2] == False:
+        if fingers[1] and not fingers[2]:
             cv2.circle(img, (x1, y1), 15, draw_color, cv2.FILLED)
             
             if xp == 0 and yp == 0:
