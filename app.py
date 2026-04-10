@@ -12,7 +12,7 @@ xp, yp = 0, 0
  
 img_canvas = np.zeros((canvas_height, canvas_width, 3), np.uint8)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Use DirectShow backend for Windows
 cap.set(3, canvas_width)
 cap.set(4, canvas_height)
 

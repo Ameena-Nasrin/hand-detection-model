@@ -9,7 +9,7 @@ class HandDetector:
         self.detection_available = False
         try:
             # Try to use new MediaPipe Tasks API
-            model_path = 'hand_landmarker.task'
+            model_path = os.path.join(os.path.dirname(__file__), 'hand_landmarker.task')
             if not os.path.exists(model_path):
                 print("Warning: hand_landmarker.task model file not found")
                 self.detection_available = False
@@ -37,19 +37,43 @@ class HandDetector:
             self.results = None
             return img
 
+        # Convert BGR to RGB for MediaPipe
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        
         # Convert to MediaPipe Image format
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_img)
 
         # Detect hands
         self.results = self.landmarker.detect(mp_image)
 
         if draw and self.results.hand_landmarks:
+            h, w, c = img.shape
             for hand_landmarks in self.results.hand_landmarks:
-                self.mp_draw.draw_landmarks(
-                    img,
-                    hand_landmarks,
-                    mp.tasks.vision.HandLandmarksConnections.HAND_CONNECTIONS
-                )
+                # Draw landmarks and connections manually
+                landmarks = hand_landmarks
+                
+                # Draw connections
+                connections = [
+                    (0, 1), (1, 2), (2, 3), (3, 4),  # Thumb
+                    (0, 5), (5, 6), (6, 7), (7, 8),  # Index
+                    (0, 9), (9, 10), (10, 11), (11, 12),  # Middle
+                    (0, 13), (13, 14), (14, 15), (15, 16),  # Ring
+                    (0, 17), (17, 18), (18, 19), (19, 20),  # Pinky
+                    (5, 9), (9, 13), (13, 17)  # Palm connections
+                ]
+                
+                for connection in connections:
+                    p1 = landmarks[connection[0]]
+                    p2 = landmarks[connection[1]]
+                    x1, y1 = int(p1.x * w), int(p1.y * h)
+                    x2, y2 = int(p2.x * w), int(p2.y * h)
+                    cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                
+                # Draw landmarks
+                for landmark in landmarks:
+                    x, y = int(landmark.x * w), int(landmark.y * h)
+                    cv2.circle(img, (x, y), 5, (255, 0, 0), -1)
+                    
         return img
 
     def find_position(self, img):
