@@ -73,7 +73,7 @@ python app.py
 
 ---
 ## Project Structure
-
+```
 hand-detection-model
 │── app.py                  # Main application entry point
 │── hand_tracker.py         # Hand tracking logic using MediaPipe
@@ -83,6 +83,7 @@ hand-detection-model
 │── requirements.txt        # Project dependencies
 │── README.md               # Project documentation
 │── __pycache__/            # Python cache files (auto-generated)
+```
 ---
 
 
