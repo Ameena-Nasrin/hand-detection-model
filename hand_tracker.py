@@ -52,8 +52,7 @@ class HandDetector:
                 # Draw landmarks and connections manually
                 landmarks = hand_landmarks
                 
-                # Draw connections
-                connections = [
+                 connections = [
                     (0, 1), (1, 2), (2, 3), (3, 4),  # Thumb
                     (0, 5), (5, 6), (6, 7), (7, 8),  # Index
                     (0, 9), (9, 10), (10, 11), (11, 12),  # Middle

@@ -68,7 +68,7 @@ class UIManager:
         """
         Visual feedback for the user based on the Phase 3 Decision Tree.
         """
-        color = (255, 255, 255) # Default White
+        color = (255, 255, 255) 
         label = "Hover"
         
         if mode == "Drawing":
