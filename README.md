@@ -118,6 +118,7 @@ hand-detection-model
 - Safa Mariyam  
 - Muhammed Humraz  
 - Fathima M A
+- Aysha Safa
 
 ---
 ## Support
